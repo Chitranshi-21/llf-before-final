@@ -315,7 +315,10 @@
     // let parentId = document.getElementById('parentId').innerHTML;
       let parentId = this.id;
     console.log('TimesheetId  '+parentId);
-      alert('Are you sure to Delete this record !');
+    var r = confirm('Are you sure to Delete this record !');
+     // alert('Are you sure to  Delete this record !');
+     if (r == true) 
+      {
   
     $.ajax({
     url : '/timesheets/deleteTimesheet/'+parentId,
@@ -334,6 +337,7 @@
           console.log('jqXHR  '+JSON.stringify(jqXHR));
           window.location.reload()
     }) 
+  }
     })
 }
 

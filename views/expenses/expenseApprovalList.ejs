@@ -12,6 +12,9 @@
 <h4 style="text-align: center;">Expense Approval Form</h4>
 <div class="container">
     <div class="row mt-5 mb-3 align-items-center">
+      <div class="col-md-5">
+        <a class="btn btn-primary btn-md bg-gray" href="/expense/expenseViewRel/<%= parentExpenseId %>" >Go To Expense </a>
+    </div>
         <div class="col-md-3">
         <input type="text" class="form-control" placeholder="Search" id="searchField" style="margin-top: 5px;">
         </div>
@@ -211,30 +214,68 @@ function anchorClickFunctionalities(){
                          if(response.approvalFormDetails.length > 0)
                             {
                               let record = response.approvalFormDetails[0];
+                            
                               let htmlTable = '';
                               htmlTable += '<tr>';
-                                htmlTable += '<td><strong>Approval Name</strong></td>';
+                                htmlTable += '<td colspan="4" style="background-color:#d3d3d3;"><h5>Information</h5></td>'; 
+                                htmlTable += '</tr>';
+                                htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Expense Approval Name</strong></td>';
                                 htmlTable += '<td>'+record.appname+'</td>';
-                                htmlTable += '<td><strong>Status</strong></td>';
-                                htmlTable += '<td>'+record.status__c+'</td>';
-                         
-                            htmlTable += '</tr>';
-                            htmlTable += '<tr>';
-                                htmlTable += '<td><strong>Approver (RM)</strong></td>';
-                                htmlTable += '<td>'+record.conname+'</td>';
-                                htmlTable += '<td><strong>Comment</strong></td>';
-                                htmlTable += '<td>'+record.comment__c+'</td>';
-                            htmlTable += '</tr>';
-                            htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Expense</strong></td>';
+                              htmlTable += '<td>'+record.expname+'</td>';
+                              htmlTable += '</tr>';
+
+                              htmlTable += '<tr>';
                               htmlTable += '<td><strong>Approval Type</strong></td>';
                               htmlTable += '<td>'+record.approval_type__c+'</td>';
-                              htmlTable += '<td><strong>Expense</strong></td>';
-                              htmlTable += '<td>'+record.expname+'</td>';
-                          htmlTable += '</tr>';
-                            htmlTable += '<tr>';
                               htmlTable += '<td><strong>Amount</strong></td>';
                               htmlTable += '<td>'+record.amount__c+'</td>';
-                          htmlTable += '</tr>';
+                              htmlTable += '</tr>';
+                            
+                                htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Submitter</strong></td>';
+                                htmlTable += '<td>'+record.contname+'</td>';
+                                htmlTable += '<td><strong>Submitter Comment</strong></td>';
+                                htmlTable += '<td>'+record.comment__c+'</td>';
+                                htmlTable += '</tr>';
+
+                                htmlTable += '<tr>';
+                                htmlTable += '<td colspan="4" style="background-color:#d3d3d3;"><h5>Reporting Manager Approval Information</h5></td>'; 
+                                htmlTable += '</tr>';
+
+                                htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Approver (RM)</strong></td>';
+                                htmlTable += '<td>'+record.conname+'</td>';
+                                htmlTable += '<td><strong>Reporting Manager Status</strong></td>';
+                                htmlTable += '<td>'+record.status__c+'</td>';
+                                htmlTable += '</tr>';
+                         
+                                htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Reporting Manager Comment</strong></td>';
+                                htmlTable += '<td>'+record.reporting_manager_comment__c+'</td>';
+                                htmlTable += '<td></td>';
+                                htmlTable += '<td></td>';
+                               htmlTable += '</tr>';
+
+                                htmlTable += '<tr>';
+                                htmlTable += '<td colspan="4" style="background-color:#d3d3d3;"><h5>Project Manager Approval Information</h5></td>'; 
+                                htmlTable += '</tr>';
+
+                                htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Assign To (PM))</strong></td>';
+                                htmlTable += '<td>'+record.assign_to_pm__c+'</td>';
+                                htmlTable += '<td><strong>Project Manager Approval Status</strong></td>';
+                                htmlTable += '<td>'+record.project_manager_approval_status__c+'</td>';
+                                htmlTable += '</tr>';
+
+                                htmlTable += '<tr>';
+                                htmlTable += '<td><strong>Approver (PM)</strong></td>';
+                                htmlTable += '<td>'+record.username+'</td>';
+                                htmlTable += '<td><strong>Project Manager Comment</strong></td>';
+                                htmlTable += '<td>'+record.project_manager_comment__c+'</td>';
+                                htmlTable += '</tr>';
+                        
                           $('#approvalTable').empty();
                             $('#approvalTable').html(htmlTable);
                             }

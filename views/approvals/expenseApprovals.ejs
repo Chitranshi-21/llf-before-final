@@ -64,7 +64,7 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <!-- Particular Expense Details -->
-                                <table id="expenseTable" class="table table-hover striped">
+                                <table id="expenseTable" class="table table-hover striped" style="overflow-y: auto;">
                                         <!-- Inside code is handled by Jquery to add dyanamic Content -->
                                 <div id="expenseDetailsSpinner">
                                             <center> <img src="/spinner-gif-transparent-background-14.gif" />  </center>
@@ -145,7 +145,7 @@
                                           <button class="btn btn-link collapsed text-left" type="button"
                                               data-toggle="collapse" data-target="#collapseFour"
                                               aria-expanded="false" aria-controls="collapseFour">
-                                              <i class="fa fa-angle-double-right mr-3"></i>Custom Approvals
+                                              <i class="fa fa-angle-double-right mr-3"></i>Expense Approvals
                                           </button>
                                       </h5>
                                   </div>
@@ -178,6 +178,50 @@
 </section>
 </div>
 </div>
+
+
+<!--Approval Pop up-->
+
+<div id="approvalCommentModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="commentModalHeading">Approval Comment</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+      <div class="">
+        <div id="approvalerrorMessages">
+    <form name="approval" id="approvalpopup">
+    <div class="form-group">
+    <label for="commentTextarea">Comment</label>
+    <textarea class="form-control" id="commentTextarea" rows="3" autocomplete="off"></textarea>
+    </div>
+    <div class="form-group"> 
+    <div class="row">
+    <div class="col-md-6">
+    <input type="hidden" class="form-control" value="" id="expenseId" name="expenseId" required>
+    </div>
+    </div>
+    </div>
+    
+    <div class="modal-footer">
+    <button type="button" class="btn btn-primary" id="submitForApproval" >Submit</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+   
+    
+  </form></div>
+  </div>
+  </div>
+  </div>
+    </div> 
+  </div>
+  
+  <!--Approval Pop up end-->
+  
 
 
 
@@ -472,7 +516,7 @@
                 
         }
 
-        function buttonFunctionality()
+      /*  function buttonFunctionality()
         {
 
             $(".approvalButton").click(function(event)
@@ -500,7 +544,88 @@
 
             });
 
+        }*/
+
+        function buttonFunctionality()
+        {
+                $('.approvalpopup').on('click',function(event){
+                
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
+                    $('#approvalCommentModal').modal('show');
+                let selectedId =  this.id;
+               // alert(selectedId);
+                let type = selectedId.split('-')[0];
+                let mixedIds = selectedId.split('-')[1];
+             //   alert(mixedIds);
+                let expenseId = mixedIds.split('@')[0];
+                let customApprovalId = mixedIds.split('@')[1];
+             //   alert('type  : '+type+' expenseId : '+expenseId+' customApprovalId : '+customApprovalId);
+               // let assetRequisitionFormId = this.id;
+               // $('#approvalCommentModal').modal('show');
+                $('#submitForApproval').on('click', function(e){
+
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+
+            
+                let comment = document.getElementById('commentTextarea').value;
+
+                $.post('/approvals/handleExpenseApproval',{type: type, expenseId: expenseId, customApprovalId:customApprovalId, comment: comment}, function(response){
+
+                 console.log('response : '+response);
+                 let msg = response;
+                console.log('messageeee '+msg);
+
+                 if(msg == 'Approved!')
+                 {
+                  let errorHtml = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+ msg+
+                  '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                  '<span aria-hidden="true">&times;</span>'+
+                  '</button>'+
+                        '</div>';
+                        $('#approvalerrorMessages').empty();
+                        $('#approvalerrorMessages').append(errorHtml);
+                        $('#approvalpopup')[0].reset()
+                        // document.getElementById("accountsapprovalpopup").reset()
+                   }
+                   else if(msg == 'Rejected!')
+                   {
+                            //    $('#taskForm')[0].reset()
+                  let errorHtml = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+ msg+
+                  '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                  '<span aria-hidden="true">&times;</span>'+
+                  '</button>'+
+                        '</div>';
+                        $('#approvalerrorMessages').empty();
+                        $('#approvalerrorMessages').append(errorHtml);
+                        $('#approvalpopup')[0].reset()
+                        // document.getElementById("accountsapprovalpopup").reset()
+                   }
+                    else
+                    {
+                    let errorHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+ msg+
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                    '<span aria-hidden="true">&times;</span>'+
+                    '</button>'+
+                    '</div>';
+                        $('#approvalerrorMessages').empty();
+                        $('#approvalerrorMessages').append(errorHtml);
+                        $('#approvalpopup')[0].reset()
+                    }
+                })
+
+
+                .fail(function(jqXHR, status, error)
+                {
+                console.log('this is for approval pop up ajax '+JSON.stringify(jqXHR));
+            
+                })
+            });
+            });
         }
+
 
 
 

@@ -201,7 +201,7 @@ router.get('/expenseAllRecords',verify, async (request, response) => {
                 obj.print='<button    data-toggle="modal" data-target="#popupPrint" class="btn btn-primary printexp" id="print'+expenseQueryResult.rows[i].sfid+'" >Print</button>';
                   obj.editButton = '<button    data-toggle="modal" data-target="#popupEdit" class="btn btn-primary expIdEditMode"   id="edit'+expenseQueryResult.rows[i].sfid+'" >Edit</button>';
                
-                  if(expenseQueryResult.rows[i].approval_status__c == 'Pending' || expenseQueryResult.rows[i].approval_status__c == 'Rejected')
+                  if(expenseQueryResult.rows[i].approval_status__c == 'Pending' || expenseQueryResult.rows[i].approval_status__c == 'Approved')
                   {
                     obj.editButton = '<button    data-toggle="modal" data-target="#popupEdit" class="btn btn-primary expIdEditMode" disabled = "true"  id="edit'+expenseQueryResult.rows[i].sfid+'" >Edit</button>';
                     obj.approvalButton = '<button   class="btn btn-primary expIdApproval" disabled = "true" style="color:white;" id="'+expenseQueryResult.rows[i].sfid+'" >Approval</button>';
@@ -1198,6 +1198,16 @@ router.post('/sendForApproval',verify, async(request, response) => {
     console.log('expenseId  :  '+expenseId+'  expenseName  : '+expenseName+'  totalAmount : '+totalAmount);
 
     let approvalStatus = 'Pending';
+    const schema=joi.object({
+      comment:joi.string().required().label('Please Fill Comment'),
+      
+  })
+  let result=schema.validate({comment:comment});
+  if(result.error){
+      console.log('fd'+result.error);
+      response.send(result.error.details[0].context.label);    
+  }
+  else{    
     let updateExpenseQuery = 'UPDATE salesforce.Milestone1_Expense__c SET '+  
                              'isHerokuEditButtonDisabled__c = true , '+
                              'approval_status__c = \''+approvalStatus+'\' '+
@@ -1212,7 +1222,7 @@ router.post('/sendForApproval',verify, async(request, response) => {
     .catch((expenseUpdateQueryError) => {
           console.log('expenseUpdateQueryError  : '+expenseUpdateQueryError.stack);
     });
-
+  
 
       let managerId = '';
       let teamId = '';
@@ -1307,11 +1317,11 @@ router.post('/sendForApproval',verify, async(request, response) => {
               .catch((projectQueryError) => {
                 console.log('projectQueryError  '+projectQueryError.stack);
               })
-
+            
           
 
-    response.send('OKOKOK');
-
+    response.send('Approval Send Succesfully!');
+            }
 });
 
 router.get('/pettycashlistview',verify,(request, response) => {

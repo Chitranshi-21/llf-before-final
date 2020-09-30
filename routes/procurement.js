@@ -719,6 +719,9 @@ router.post('/updateasset',(request,response)=>{
 
     let parentAssetId = request.params.parentAssetId;
     console.log('parentAssetId  '+parentAssetId);
+    var userId = request.user.sfid; 
+    var objUser = request.user;
+    console.log('Expense userId : '+userId);
   /*   let qry ='SELECT sfid ,	State__c,District__c,Items__c Form salesforce.Impaneled_Vendor__c';
     pool
     .query()
@@ -730,7 +733,7 @@ router.post('/updateasset',(request,response)=>{
         })
         response.render('procurementIT',{name: request.user.name, email: request.user.email, parentAssetId: parentAssetId});
     }) */
-    response.render('procurementNonIT',{name: request.user.name, email: request.user.email, parentAssetId: parentAssetId});
+    response.render('procurementNonIT',{name: request.user.name,objUser: objUser, email: request.user.email, parentAssetId: parentAssetId});
 
 });
 
@@ -896,6 +899,9 @@ router.get('/itProducts/:parentAssetId',verify, (request,response) => {
 
     let parentAssetId = request.params.parentAssetId;
     console.log('parentAssetId  '+parentAssetId);
+    var userId = request.user.sfid; 
+    var objUser = request.user;
+    console.log('Expense userId : '+userId);
   /*   let qry ='SELECT sfid ,	State__c,District__c,Items__c Form salesforce.Impaneled_Vendor__c';
     pool
     .query()
@@ -907,7 +913,7 @@ router.get('/itProducts/:parentAssetId',verify, (request,response) => {
         })
         response.render('procurementIT',{name: request.user.name, email: request.user.email, parentAssetId: parentAssetId});
     }) */
-    response.render('procurementIT',{name: request.user.name, email: request.user.email, parentAssetId: parentAssetId});
+    response.render('procurementIT',{name: request.user.name,objUser: objUser, email: request.user.email, parentAssetId: parentAssetId});
 
 });
 router.post('/itProducts', (request,response) => {
@@ -2039,6 +2045,40 @@ router.post('/updateVendor',(request,response)=>{
     console.log('quote  '+quote);
     console.log('reason  '+reason);
 
+    if(gst == null || gst == '' )
+    {
+         schema=joi.object({
+            state:joi.string().required().label('Please Choose State'),
+            district:joi.string().required().label('Please Choose District'),
+            name:joi.string().min(3).max(80).required().label('Please Fill Vendor Name'),
+            bankDetail:joi.string().min(3).max(255).required().label('Please Fill Bank Details'),
+            aacc:joi.string().min(3).required().label('Please Fill Bank Account Number'),
+            ifsc:joi.string().min(3).max(20).required().label('Please Fill Bank IFSC Code.'),
+            reason:joi.string().min(1).max(255).required().label('Please Fill Reason for not providing GST no.'),
+            
+              })
+        result = schema.validate({state:state,district:district,name:name,bankDetail:bankDetail,aacc:aacc,ifsc:ifsc,reason:reason});
+        
+    }
+    else
+    {
+
+        schema=joi.object({
+           state:joi.string().required().label('Please Choose State'),
+           district:joi.string().required().label('Please Choose District'),
+           name:joi.string().min(1).max(80).required().label('Please Fill Vendor Name'),
+           bankDetail:joi.string().min(1).max(255).required().label('Please Fill Bank Details'),
+           aacc:joi.string().required().label('Please Fill Bank Account Number'),
+           ifsc:joi.string().min(1).max(20).required().label('Please Fill Bank IFSC Code.'),
+             })
+        result = schema.validate({state:state,district:district,name:name,bankDetail:bankDetail,aacc:aacc,ifsc:ifsc});
+    }
+
+    if(result.error){
+        console.log('fd'+result.error);
+        response.send(result.error.details[0].context.label);    
+    }
+    else{
     let updateQuerry = 'UPDATE salesforce.Impaneled_Vendor__c SET '+
                          'vendor_Name__c = \''+name+'\', '+
                          'District__c = \''+district+'\', '+
@@ -2066,6 +2106,7 @@ router.post('/updateVendor',(request,response)=>{
          console.log('updatetError'+updatetError.stack);
          response.send('Error');
     })
+}
 })
 router.get('/getItemDetail',(request,response)=>{
 let itemId=request.query.itemId;
@@ -2401,7 +2442,7 @@ router.post('/uploadFiless',(request,response)=>{
 
     }
     else{
-        response.send('ERROR PLEASE CHOOSE FILE');
+        response.send('Error: Please Choose File');
     }
   
 })

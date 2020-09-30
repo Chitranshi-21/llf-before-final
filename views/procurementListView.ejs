@@ -31,7 +31,7 @@
         </div>
  </div>
 
- <div id="procurementItListView" class="responsive ">
+ <div id="procurementItListView" class="responsive " style="overflow-y: auto;">
 
  </div>
 
@@ -495,8 +495,10 @@ function additionaldeleteFunctionality(){
                      // let parentId = document.getElementById('parentId').innerHTML;
                       let parentId = this.id;
                     console.log('procurementparentId'+parentId);
-                      alert('Are you sure to Delete this record !');
-                   
+                    var r = confirm('Are you sure to Delete this record !');
+     // alert('Are you sure to  Delete this record !');
+     if (r == true) 
+            {
                 $.ajax({
                 url : '/procurement/deleteProcurementIt/'+parentId,
                 type:'get',
@@ -515,6 +517,7 @@ function additionaldeleteFunctionality(){
                           console.log('jqXHR  '+JSON.stringify(jqXHR));
                           window.location.reload()
                     }) 
+                  }
                     })
         }
     </script>

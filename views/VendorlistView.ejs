@@ -38,37 +38,36 @@
 
 
 <!-- vendor edit Modal  modal -->
-<div id="venderEditModal" class="modal fade ">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">  Vendor Edit  Form</h5>
+<div id="venderEditModal" class="modal fade bs-example-modal-lg" tabindex ="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+          <h5 class="modal-title" id="createTaskModal"> Vendor Edit  Form</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      
-        <div class="modal-body" id="editModalBody" >
+            </button>
+            </div>
+            <div class="modal-body">
             <div class="">
-                <div id="errorMessages">
-            <form name="editvendor" id="editvendor"  class="needs-validation" novalidate >
-             <div class="form-group">
+            <div id="errorMessages"></div>
+            <form id="editvendor" class="needs-validation" novalidate  >
+              <div class="form-group"> 
                 <div class="row">
-                    <div class="col-md-6">
+                <div class="col-md-6">
                       <label for="vendorId">Impaneled Vendor ID</label>
                       <input type="text" disabled class="form-control" id="vendorId" value=""   name="vendorId" >
                     </div>
+
                     <div class="col-md-6">
                         <label for="name">Vendor Name </label>
                         <input type="text"  class="form-control" id="name" value=""   name="name" >
                       </div>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group"> 
                 <div class="row">
-                  
-                  
-                  <div class="col-md-6">
+               
+                <div class="col-md-6">
                   <label for="state">state </label>
                     <select id="state" name="state" class="form-control item_unit"><option value="">Select</option></select>
                   </div>
@@ -168,15 +167,16 @@
                   </div>     
               </div>
               <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary" id="editVendorButton" data-dismiss="modal">Save</button>
+                  <button type="submit" class="btn btn-primary" id="editVendorButton" >Save</button>
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-            </form></div>
-          </div>
-  </div>
-</div>
-</div></div>
+                </div>
 
+              </form>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
     
 
 
@@ -254,6 +254,13 @@
                                           </div>
                                         </div>
 <script>
+
+let st =["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh",
+    "Jharkhand", "Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha",
+    "Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura", "Uttar Pradesh","Uttarakhand","West Bengal"];
+    let dstrUP=["Noida","Ghaziabad","Kanpur Nagar","Kanpur Dehat","Unnao"];
+    let dstrUK=["Almora","Bageshwar","Chamoli","Champawat","Dehradun","Haridwar","Nainital","Pauri Garhwal","Pithoragarh"];
+    let dstrJK=["Ranchi"];
     $(document).ready(function(){
         let columns ={
             sequence : 'Sequence',
@@ -474,58 +481,74 @@
               "Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura", "Uttar Pradesh","Uttarakhand","West Bengal"];
               let dstrUP=["Noida","Ghaziabad","Kanpur Nagar","Kanpur Dehat","Unnao"];
               let dstrUK=["Almora","Bageshwar","Chamoli","Champawat","Dehradun","Haridwar","Nainital","Pauri Garhwal","Pithoragarh"];
+              let dstrJK=["Ranchi"];
               if(st.length > 0)
-              {
-                for(let i=0; i < st.length; i++)
                 {
-                  $('#state')
-                  .append($("<option></option>")
-                  .attr("value",st[i])
-                  .text(st[i]))
-                }
-              }
-              $('#state').on('change',function(){
-                let state =this.value;
-                sts=state;
-               // alert("selcted"+sts);
-                let select = document.getElementById("district");
-                let length = select.options.length;
-                for (i = length-1; i > 0; i--) {
-                    if(dist!=null){
-                        select.options[i] = null;
-                    }
-                  }
-              //  alert('You Choose'+state);
-                if(state=='Uttar Pradesh')
-                {
-                 $('#district').attr("readonly",false);
-               //  alert('You Choose=> '+state);
-                 $('#district')
-                   .append($("<option></option>")
-                   .attr("value","")
-                   .text("select District"))
-                  for(let i=0; i <dstrUP.length; i++)
+                  for(let i=0; i < st.length; i++)
                   {
-                   $('#district')
-                   .append($("<option></option>")
-                   .attr("value",dstrUP[i])
-                   .text(dstrUP[i]))
+                    $('#state')
+                    .append($("<option></option>")
+                    .attr("value",st[i])
+                    .text(st[i]))
                   }
                 }
-                 else if(state=='Uttarakhand')
-                {
-              //   alert('You Choose=> '+state);
-                 $('#district').attr("readonly",false);
-                  for(let i=0; i <dstrUK.length; i++)
-                  {
-                   $('#district')
-                   .append($("<option></option>")
-                   .attr("value",dstrUK[i])
-                   .text(dstrUK[i]))
-                  }
-                }
-             })
-
+                $('#state').on('click',function(){
+        let state =this.value;
+        sts=state;
+        //alert("selcted"+sts);
+        let select = document.getElementById("district");
+        let length = select.options.length;
+        for (i = length-1; i > 0; i--) {
+          select.options[i] = null;
+         }
+      //  alert('You Choose'+state);
+        if(state=='Uttar Pradesh')
+        {
+         $('#district').attr("readonly",false);
+       //  alert('You Choose=> '+state);
+         $('#district')
+          for(let i=0; i <dstrUP.length; i++)
+          {
+           $('#district')
+           .append($("<option></option>")
+           .attr("value",dstrUP[i])
+           .text(dstrUP[i]))
+          }
+        }
+         else if(state=='Uttarakhand')
+        {
+     //    alert('You Choose=> '+state);
+         $('#district').attr("readonly",false);
+         $('#district').clearQueue();
+          for(let i=0; i <dstrUK.length; i++)
+          {
+           $('#district')
+           .append($("<option></option>")
+           .attr("value",dstrUK[i])
+           .text(dstrUK[i]))
+          }
+        }
+        else if(state=='Jharkhand')
+        {
+     //    alert('You Choose=> '+state);
+         $('#district').attr("readonly",false);
+         $('#district').clearQueue();
+          for(let i=0; i <dstrJK.length; i++)
+          {
+           $('#district')
+           .append($("<option></option>")
+           .attr("value",dstrJK[i])
+           .text(dstrJK[i]))
+          }
+        }
+        else{
+         $('#district').attr("readonly",true);
+        }
+        $('#district').on('change',function(){
+         dstr=this.value;
+         //alert('District choose =>'+dstr);
+       })           
+     })
 
 
           //    alert('vendorEditId modal ID=>'+vendorId);
@@ -601,7 +624,7 @@
                         '</div>';
                         $('#errorMessages').empty();
                         $('#errorMessages').append(errorHtml); 
-                        $("#submitbutton").attr("disabled", false);
+                        $("#editVendorButton").attr("disabled", false);
                       //  $("#createTaskModal").modal("hide");
                         window.location.reload()
                     }
@@ -615,7 +638,7 @@
                         '</div>';
                         $('#errorMessages').empty();
                         $('#errorMessages').append(errorHtml); 
-                        $("#submitbutton").attr("disabled", false);
+                        $("#editVendorButton").attr("disabled", false);
                       //  $("#createTaskModal").modal("hide");
                        // window.location.reload()
                     }  

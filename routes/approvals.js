@@ -3,6 +3,8 @@ const pool = require('../db/dbConfig');
 const verify = require('../config/verifyToken');
 const format = require('pg-format');
 const Router = require('express-promise-router');
+const joi = require('@hapi/joi');
+
 const router = new Router();
 
 router.get('/expenseApprovals',verify, (request, response) => {
@@ -34,14 +36,20 @@ router.get('/expenseApprovalsList',verify, (request, response) => {
                     obj.createdDate = strDate;
                     if(customApprovalResult.rows[i].status__c == 'Approved' || customApprovalResult.rows[i].status__c == 'Rejected')
                     {
-                        obj.approveBtn = '<button class="btn btn-primary approvalButton" disabled = "true"  id="Approved-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Approve</button>';
-                        obj.rejectBtn = '<button class="btn btn-danger approvalButton" disabled = "true"  id="Rejected-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Reject</button>';
-                        }
+                        //obj.approveBtn = '<button class="btn btn-primary approvalButton"  disabled = "true"  id="Approved-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Approve</button>';
+                        obj.approveBtn = '<button href="#" class="btn btn-primary approvalpopup"  disabled = "true"  id="Approved-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Approve</button>';
+                        obj.rejectBtn = '<button href="#" class="btn btn-danger approvalpopup" disabled = "true"  id="Rejected-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Reject</button>';
+                      //  obj.rejectBtn = '<button class="btn btn-danger approvalButton" disabled = "true"  id="Rejected-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Reject</button>';
+         
+                    }
                    else
                    {
-                    obj.approveBtn = '<button class="btn btn-primary approvalButton" id="Approved-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Approve</button>';
-                    obj.rejectBtn = '<button class="btn btn-danger approvalButton" id="Rejected-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Reject</button>';
-                   }
+                  //  obj.approveBtn = '<button class="btn btn-primary approvalButton" id="Approved-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Approve</button>';
+                  //  obj.rejectBtn = '<button class="btn btn-danger approvalButton" id="Rejected-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Reject</button>';
+                    obj.approveBtn = '<button href="#" class="btn btn-primary approvalpopup" id="Approved-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Approve</button>';
+                    obj.rejectBtn = '<button href="#" class="btn btn-danger approvalpopup" id="Rejected-'+customApprovalResult.rows[i].expense__c+'@'+customApprovalResult.rows[i].sfid+'" >Reject</button>';
+  
+                }
 
                     lstApprovalRecords.push(obj);
                 }
@@ -283,15 +291,22 @@ router.get('/getApprovalDetail',verify, async(request,response)=>{
       router.get('/getExpenseApprovalDetail',verify, async(request,response)=>{
  
         let approvalId=request.query.approvalId;
+        let conId ='';
         
         console.log('getApprovalDetail Id='+approvalId);
         
         var approvalFormAndRelatedRecords = {};
     
-          let qry ='SELECT app.sfid as appsfid, app.name as appname, app.Approval_Type__c,app.Comment__c,app.Status__c, con.name as conname, exp.name as expname, exp.sfid as expsfid, app.Approver_RM__c , app.Amount__c,app.createddate, app.Expense__c, app.Assign_To_PM__c '+
-          ' FROM salesforce.Custom_Approval__c app '+
+          let qry ='SELECT app.sfid as appsfid, app.name as appname, app.Approval_Type__c, app.comment__c, app.Reporting_Manager_Comment__c, app.Submitter_Heroku__c, cont.name as contname, '+
+          'app.Project_Manager_Comment__c, app.Status__c, con.name as conname, exp.name as expname, exp.sfid as expsfid, app.Approver_RM__c, usr.name as username, '+
+          'app.Amount__c,app.createddate, app.Expense__c, app.Assign_To_PM__c, app.Project_Manager_Approval_Status__c, app.Project_Manager_Comment__c, app.Approver_PM__c '+
+          'FROM salesforce.Custom_Approval__c app '+
          'INNER JOIN salesforce.Contact con '+
          'ON app.Approver_RM__c=con.sfid '+
+         'INNER JOIN salesforce.Contact cont '+
+         'ON app.Submitter_Heroku__c = cont.sfid '+
+         'INNER JOIN salesforce.User usr '+
+         'ON app.Approver_PM__c = usr.sfid '+
          'INNER JOIN salesforce.Milestone1_Expense__c exp '+
          'ON app.Expense__c = exp.sfid '+
          'WHERE app.sfid = $1 ';
@@ -304,7 +319,10 @@ router.get('/getApprovalDetail',verify, async(request,response)=>{
                 if(querryResult.rowCount > 0)
                 {
                     console.log('querryResult  '+querryResult.rows);
-                    approvalFormAndRelatedRecords.approvalFormDetails = querryResult.rows;        
+                    let approver_pm = querryResult.rows[0].approver_pm__c;
+                    console.log('approver_pm '+approver_pm);
+                    approvalFormAndRelatedRecords.approvalFormDetails = querryResult.rows;
+                     
                 }
                 else
                 {
@@ -354,12 +372,26 @@ router.get('/getApprovalDetail',verify, async(request,response)=>{
             console.log('objUser  : '+JSON.stringify(objUser));
             let body = request.body;
             console.log('body  : '+JSON.stringify(body));
-        
+            let comm = request.body.comment;
+            console.log('comment +++  '+comm);
+
+            const schema=joi.object({
+                comm:joi.string().required().label('Please Fill Comment'),
+                
+            })
+            let result=schema.validate({comm:comm});
+            if(result.error){
+                console.log('fd'+result.error);
+                response.send(result.error.details[0].context.label);    
+            }
+            else{            
+            
             if(objUser.isManager)
             {
                 
                     let customApprovalUpdateQuery = 'UPDATE salesforce.Custom_Approval__c SET '+
-                                                    'status__c = \''+body.type+'\' '+
+                                                    'status__c = \''+body.type+'\' ,'+
+                                                    'Reporting_Manager_Comment__c= \''+body.comment+'\' '+
                                                     'WHERE sfid = $1';
                     
                     console.log('customApprovalUpdateQuery  : '+customApprovalUpdateQuery);
@@ -389,11 +421,11 @@ router.get('/getApprovalDetail',verify, async(request,response)=>{
                     
                             if(body.type == 'Approved')
                             {
-                                response.send('Approved !');
+                                response.send('Approved!');
                             }
                             else if(body.type == 'Rejected')
                             {
-                                response.send('Rejected !');
+                                response.send('Rejected!');
                             }
         
                     })
@@ -402,6 +434,7 @@ router.get('/getApprovalDetail',verify, async(request,response)=>{
                     })
         
             }
+        }
         
         });
     

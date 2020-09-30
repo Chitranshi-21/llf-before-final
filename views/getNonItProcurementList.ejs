@@ -8,30 +8,30 @@
 <h3 style="text-align: center; margin-top: 20px;">PROCUREMENT NON-IT </h3>
 
 <div class="container">
-    <div class="row mt-5 mb-3 align-items-center">
-        <div class="col-md-5">
-          <a class="btn btn-primary btn-md bg-gray" href="/procurement/assetRequisitionViewRel/<%=parentAssetId %>" >Go To Asset Requisition </a>
-          <!--   <a class="btn btn-primary btn-md bg-gray" href="#" id="">Create New Non It Procurement</a> -->
-            <!-- <a class="btn btn-primary btn-md bg-gray" href="/procurement/getNonItProcurementListVIew/" >Refresh</a> -->
-        </div>
-        <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Search" id="searchField" style="margin-top: 5px;">
-        </div>
-        <div class="col-md-2 text-right">
-        <span class="pr-2">Rows Per Page:</span>
-        </div>
-        <div class="col-md-1">
-            <div class="d-flex justify-content-end">
-                <select class="custom-select" name="rowsPerPage" id="changeRows">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15" selected>15</option>
-                </select>
-            </div>
-        </div>
- </div>
+  <div class="row mt-5 mb-3 align-items-center">
+      <div class="col-md-5">
+        <a class="btn btn-primary btn-md bg-gray" href="/procurement/assetRequisitionViewRel/<%=parentAssetId %>" >Go To Asset Requisition </a>
+       <!--    <a class="btn btn-primary btn-md bg-gray" href="#" id="">Create New It Procurement</a> -->
+       <!--    <a class="btn btn-primary btn-md bg-gray" href="/procurement/getProcurementItListView/"+<%=parentAssetId %> >Refresh</a> -->
+      </div>
+      <div class="col-md-3">
+      <input type="text" class="form-control" placeholder="Search " id="searchField" style="margin-top: 5px;">
+      </div>
+      <div class="col-md-2 text-right">
+      <span class="pr-2">Rows Per Page:</span>
+      </div>
+      <div class="col-md-1">
+          <div class="d-flex justify-content-end">
+              <select class="custom-select" name="rowsPerPage" id="changeRows">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15" selected>15</option>
+              </select>
+          </div>
+      </div>
+</div>
 
- <div id="nonItTable" class="responsive ">
+ <div id="nonItTable" class="responsive " style="overflow-y: auto;">
 
  </div>
 
@@ -47,13 +47,13 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-y: auto;">
 
         <div id="detailLoadingSpinners">
           <center> <img src="/spinner-gif-transparent-background-14.gif" />  </center>
       </div>
-      <div class="table-responsive">
-        <table id="vendorDetTable" class="table">
+      <div class="table-responsive" style="overflow-y: auto;">
+        <table id="vendorDetTable" class="table" >
 
         </table>
       </div>
@@ -100,7 +100,7 @@
         <center> <img src="/spinner-gif-transparent-background-14.gif" /> </center>
         </div>
         <div class="table-responsive">
-        <table id="procTable" class="table">
+        <table id="procTable" class="table" style="overflow-y: auto;">
         </table>
         </div>
         <!-- Particul Non It Details-->
@@ -667,7 +667,10 @@ $('.deleteProcIt').on('click',function(event){
      // let parentId = document.getElementById('parentId').innerHTML;
       let parentId = this.id;
     console.log('procurementparentId'+parentId);
-      alert('Are you sure to Delete this record !');
+    var r = confirm('Are you sure to Delete this record !');
+     // alert('Are you sure to  Delete this record !');
+     if (r == true) 
+            {
    
 $.ajax({
 url : '/procurement/deleteProcurementNonIt/'+parentId,
@@ -687,6 +690,7 @@ dataType: 'json',
           console.log('jqXHR  '+JSON.stringify(jqXHR));
           window.location.reload()
     }) 
+  }
     })
 }
 

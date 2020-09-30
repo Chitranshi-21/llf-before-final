@@ -52,7 +52,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="overflow-y: auto;">
   
           <div id="detailLoadingSpinner">
             <center> <img src="/spinner-gif-transparent-background-14.gif" />  </center>
@@ -258,7 +258,10 @@ $('.deleteButton').on('click',function(event){
     // let parentId = document.getElementById('parentId').innerHTML;
       let parentId = this.id;
     console.log('pettyCashId  '+parentId);
-      alert('Are you sure to  Delete this record !');
+    var r = confirm('Are you sure to Delete this record !');
+     // alert('Are you sure to  Delete this record !');
+     if (r == true) 
+            {
   
 $.ajax({
 url : '/expense/deleteConveyance/'+parentId,
@@ -277,6 +280,7 @@ dataType: 'json',
           console.log('jqXHR  '+JSON.stringify(jqXHR));
            window.location.reload()
     }) 
+  }
     })
 }
 

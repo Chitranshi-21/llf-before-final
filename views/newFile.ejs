@@ -3,10 +3,8 @@
 <% include ../partials/messages %>
 <% include ../partials/footer %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 <style>
   
       .project-tab {
@@ -104,48 +102,10 @@
           transform: rotate(90deg);
           /* Standard syntax */
       }
-/* For mobile phones: */
-[class*="col-"] {
-  width: 100%;
-}
 
-@media only screen and (min-width: 600px) {
-  /* For tablets: */
-  .col-s-1 {width: 8.33%;}
-  .col-s-2 {width: 16.66%;}
-  .col-s-3 {width: 25%;}
-  .col-s-4 {width: 33.33%;}
-  .col-s-5 {width: 41.66%;}
-  .col-s-6 {width: 50%;}
-  .col-s-7 {width: 58.33%;}
-  .col-s-8 {width: 66.66%;}
-  .col-s-9 {width: 75%;}
-  .col-s-10 {width: 83.33%;}
-  .col-s-11 {width: 91.66%;}
-  .col-s-12 {width: 100%;}
-}
-@media only screen and (min-width: 768px) {
-  /* For desktop: */
-  .col-1 {width: 8.33%;}
-  .col-2 {width: 16.66%;}
-  .col-3 {width: 25%;}
-  .col-4 {width: 33.33%;}
-  .col-5 {width: 41.66%;}
-  .col-6 {width: 50%;}
-  .col-7 {width: 58.33%;}
-  .col-8 {width: 66.66%;}
-  .col-9 {width: 75%;}
-  .col-10 {width: 83.33%;}
-  .col-11 {width: 91.66%;}
-  .col-12 {width: 100%;}
-}
     
   </style>
-</head>
-<body>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/stylesheets/table-sortable.css">
-<script src="/scripts/table-sortable.js" ></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="container-fluid bg-gray" id="accordion-style-1">
       <p id="expenseIdpTag"> </p>
@@ -182,11 +142,29 @@
                           </div>
                       </div>
               </div>
-              <div class=" responsive" style="overflow-y: auto;" id="rootExpenseTable">
+              <div class=" responsive" id="rootExpenseTable">
                   <div id="spinner">
                       <center> <img src="/spinner-gif-transparent-background-14.gif" />  </center>
                     </div>
-                
+                    
+                  <!--  <table class="table" id="allExpenseRecordsTableId">
+                      <thead>
+                          <tr>
+                              <th>Expense Name</th>
+                              <th>Project </th>
+                              <th>Approval Status</th>
+                              <th>Amount Claimed</th>
+                              <th>Petty Cash Amount</th>
+                              <th>Conveyance Amount</th>
+                              <th>Tour Bill Claim Amount</th>
+                              <th>Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        
+                          
+                      </tbody>
+                    </table> -->
                 </div>
                 <div class="modal fade" id="popup">
                       <div class="modal-dialog modal-lg">
@@ -208,8 +186,8 @@
                                               <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Related</a>
                                           </div>
                                       </nav>
-                                      <div class="tab-content" id="nav-tabContent" style="overflow-y: auto;">
-                                          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="overflow-y: auto;">
+                                      <div class="tab-content" id="nav-tabContent">
+                                          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                               <!-- Particular Expense Details -->
                                                   <table id="expenseTable" class="table table-hover striped">
                                                           <!-- Inside code is handled by Jquery to add dyanamic Content -->
@@ -237,7 +215,7 @@
 
                                                       <div id="collapseOne" class="collapse show fade"
                                                           aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                          <div class="card-body" style="overflow-y: auto;">
+                                                          <div class="card-body">
                                                               <table id="pettyCashTable" class="table table-hover striped">
                                                                   
                                                               </table>
@@ -258,7 +236,7 @@
                                                       </div>
                                                       <div id="collapseTwo" class="collapse fade" aria-labelledby="headingTwo"
                                                           data-parent="#accordionExample">
-                                                          <div class="card-body" style="overflow-y: auto;">
+                                                          <div class="card-body">
                                                                   <table id="conveyanceVoucherTable" class="table table-hover striped">
                                                                         
                                                                   </table>
@@ -266,23 +244,23 @@
                                                       </div>
                                                   </div>
                                                   <div class="card">
-                                                      <div class="card-header" id="headingThree">
-                                                          <h5 class="mb-0">
-                                                              <button class="btn btn-link collapsed text-left" type="button"
-                                                                  data-toggle="collapse" data-target="#collapseThree"
-                                                                  aria-expanded="false" aria-controls="collapseThree">
-                                                                  <i class="fa fa-angle-double-right mr-3"></i>Tour Bill Claim
-                                                              </button>
-                                                              <!-- <button class="btn btn-primary float-right">New</button> -->
-                                                              <a href="#" class="btn btn-primary float-right tourBillClaim" style="color:white;" id="tourBillClaimNewButton">New</a>
-                                                          </h5>
-                                                      </div>
-                                                      <div id="collapseThree" class="collapse fade"
-                                                          aria-labelledby="headingThree" data-parent="#accordionExample">
-                                                          <div class="card-body" style="overflow-y: auto;">
-                                                                  <table id="tourBillClaimTable" class="table  table-hover striped">
-                                                                          
-                                                                  </table>
+                                                    <div class="card-header" id="headingThree">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link collapsed text-left" type="button"
+                                                                data-toggle="collapse" data-target="#collapseThree"
+                                                                aria-expanded="false" aria-controls="collapseThree">
+                                                                <i class="fa fa-angle-double-right mr-3"></i>Tour Bill Claim
+                                                            </button>
+                                                            <!-- <button class="btn btn-primary float-right">New</button> -->
+                                                            <a href="#" class="btn btn-primary float-right tourBillClaim" style="color:white;" id="tourBillClaimNewButton">New</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseThree" class="collapse fade"
+                                                        aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                                <table id="tourBillClaimTable" class="table  table-hover striped">
+                                                                        
+                                                                </table>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -292,13 +270,13 @@
                                                             <button class="btn btn-link collapsed text-left" type="button"
                                                                 data-toggle="collapse" data-target="#collapseFour"
                                                                 aria-expanded="false" aria-controls="collapseFour">
-                                                                <i class="fa fa-angle-double-right mr-3"></i>Expense Approvals
+                                                                <i class="fa fa-angle-double-right mr-3"></i>Custom Approvals
                                                             </button>
                                                         </h5>
                                                     </div>
                                                     <div id="collapseFour" class="collapse fade"
                                                         aria-labelledby="headingFour" data-parent="#accordionExample">
-                                                        <div class="card-body" style="overflow-y: auto;">
+                                                        <div class="card-body">
                                                                 <table id="customApprovalTable" class="table  table-hover striped">
                                                                         
                                                                 </table>
@@ -404,8 +382,6 @@
 
     <!-- Create Expense Modal  End -->
 
-
-
 <!--  Edit Expense Modal Start -->      
 
 <div class="modal fade" id="popupEdit">
@@ -435,50 +411,49 @@
 
 <!-- Popup PRINT MODAL START -->
 <div id="toNewWindow">
-  <div id="popupPrint" class="modal fade">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header" >
-          <h3 style="text-align: center;" class="modal-title">Expense Information </h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+<div id="popupPrint" class="modal fade">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h3 style="text-align: center;" class="modal-title">Expense Information </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div id="detailLoadingSpinner1">
+          <center> <img src="/spinner-gif-transparent-background-14.gif" />  </center>
+      </div>
+      <div id='printExpensediv' style="overflow-x:auto;">
+       <table id="printExpensetable" class="table">
+       </table>
+       <table id="printpettycash" class="table">
+       </table>
+       <table id="printconveyance" class="table">
+       </table>
+       <table id="printairrailBus" class="table">
+      </table>
+      <table id="printConveyanceCharge" class="table">
+      </table>
+      <table id="printboardinglodging" class="table">
+      </table>
+      <table id="printtelphoneFood" class="table">
+      </table>
+      <table id="printmiscellaneous" class="table">
+      </table>
+
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" value="Click to print!" id="print">click to Print</button>
+        <button type="button" class="btn btn-danger" id="closePrint" data-dismiss="modal" aria-label="Close">Close</button>
   
-          <div id="detailLoadingSpinner1">
-            <center> <img src="/spinner-gif-transparent-background-14.gif" />  </center>
-        </div>
-        <div id='printExpensediv' style="overflow-x:auto;">
-         <table id="printExpensetable" class="table">
-         </table>
-         <table id="printpettycash" class="table">
-         </table>
-         <table id="printconveyance" class="table">
-         </table>
-         <table id="printairrailBus" class="table">
-        </table>
-        <table id="printConveyanceCharge" class="table">
-        </table>
-        <table id="printboardinglodging" class="table">
-        </table>
-        <table id="printtelphoneFood" class="table">
-        </table>
-        <table id="printmiscellaneous" class="table">
-        </table>
-  
-        </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" value="Click to print!" id="print">click to Print</button>
-          <button type="button" class="btn btn-danger" id="closePrint" data-dismiss="modal" aria-label="Close">Close</button>
-    
-        </div>
       </div>
     </div>
   </div>
-  <!-- Popup PRINT modal END  -->
-  <!-- Popup PRINT modal END  -->
+</div>
+<!-- Popup PRINT modal END  -->
 
 
 
@@ -506,8 +481,8 @@
         </div>   
 
           <div class="modal-footer">
-            <button type="submit" id="expenseSubmitbutton"  class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" id="expenseSubmitbutton"  class="btn btn-primary">Save</button>
           </div>
 
         </form>
@@ -523,38 +498,36 @@
 <div id="approvalCommentModal" class="modal fade">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+     
       <div class="modal-header">
-        <h5 class="modal-title"  id="commentModalHeading"></h5>Approval Comment</h5>
+        <h5 class="modal-title">Approval Comment</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-          </button>
-          </div>
-          <div class="modal-body">
+        </button>
+      </div>
+      <div class="modal-body">
         <div class="">
-          <div id="approvalerrorMessages">
-            <form name="approval" id="approvalpopup">
-              <div class="form-group">
-                <label for="commentTextarea">Comment</label>
+          <div id="apperrorMessages">
+        <div class="form-group">
+          <label for="commentTextarea">Comment</label>
           <textarea class="form-control" id="commentTextarea" rows="3" autocomplete="off"></textarea>
         </div>
-        <div class="form-group"> 
+        <div class="form-group">  
           <div class="row">
-          <div class="col-md-6">
+            <div class="col-md-6">
               <input type="hidden" class="form-control"  value=""  id="expenseId" name="expenseId" required>
             </div>
-          </div>
-          </div>
-          
-          <div class="modal-footer">
+        </div>
+
+      </div>
+      </div>
+      <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="submitForApproval" >Submit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
-    </form></div>
+    </div>
   </div>
-  </div>
-  </div>
-    </div> 
-  </div>
+</div>
 
 <!-- Create Tour Bill Claim Modal Start -->
 <div id="createTourBillClaim" class="modal fade bs-example-modal-lg" tabindex ="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
@@ -581,8 +554,8 @@
         </div>   
 
           <div class="modal-footer">
-            <button type="submit" id="expenseSubmitbutton"  class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" id="expenseSubmitbutton"  class="btn btn-primary">Save</button>
           </div>
 
         </form>
@@ -592,7 +565,6 @@
     </div>
   </div>
 </div>
-
 <!-- Create Tour Bill Claim Modal End -->
 
 <!-- Create Tour Bill Claim Modal Start -->
@@ -627,8 +599,8 @@
         </div>   
 
           <div class="modal-footer">
-            <button type="submit" id="tourBillClaimSubmitbutton"  class="btn btn-primary">Save</button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" id="tourBillClaimSubmitbutton"  class="btn btn-primary">Save</button>
           </div>
 
         </form>
@@ -638,8 +610,6 @@
   </div>
 </div>
 
-</body>
-</html>
 
 <!-- Create Tour Bill Claim Modal End -->
 
@@ -674,9 +644,6 @@
           projectName: 'Project Name',
           approvalStatus: 'Reporting Manager Status',
           totalAmount: 'Total Amount',
-          /* pettyCashAmount: 'Petty Cash Amount',
-          conveyanceVoucherAmount: 'Conveyance Voucher Amount' ,
-          tourBillAmount: 'Tour Bill Amount', */
           createdDate : 'Created Date', 
           approvalButton : 'Submit for Approval',
           print : 'Print Expense',
@@ -692,6 +659,7 @@
           sorting: true,
           rowsPerPage: 15,
           pagination:true,
+          sorting: ['createdDate','sequence'],
           tableWillMount: () => {
               console.log('table will mount');
             //  $('#loaderSpin').show();
@@ -1075,68 +1043,68 @@
         });
 
 
-        $(".expIdApproval").on('click', function(event)
-        {
-          event.preventDefault();
+        $(".expIdApproval").on('click', function(event){
           event.stopPropagation();
           event.stopImmediatePropagation();
-          $("#approvalCommentModal").modal('show');
           let selectedExpenseId = this.id;
           document.getElementById('expenseId').setAttribute('value',selectedExpenseId);
-          $('#submitForApproval').on('click',function(event){
-
-               
-        let comment  = document.getElementById('commentTextarea').value;
-        let expenseID = document.getElementById('expenseId').value;
-        //  alert('comment' +comment+' expenseID : '+expenseID);
-
-        document.getElementById('edit'+expenseID).disabled=true;
-        let expenseName = document.getElementById('name'+expenseID).text;
-        let totalAmount = document.getElementById('amount'+expenseID).innerHTML;
-        console.log('expenseName  : '+expenseName+' totalAmount : '+totalAmount);
-        $("#submitForApproval").attr("disabled", true);
-
-        $.post("/expense/sendForApproval", {selectedExpenseId : expenseID, expenseName: expenseName, totalAmount :totalAmount, comment: comment}, 
-
-        function(data){
-                console.log(data);
-              // onLoadTask();
-              //  $("#approvalCommentModal").modal('hide');
-              let msg = data;
-        if(msg == 'Approval Send Succesfully!')
-        {
-        //  document.getElementById("formdata").reset();
-        let errorHtml = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+msg+
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-          '<span aria-hidden="true">&times;</span>'+
-        '</button>'+
-        '</div>';
-        $('#approvalerrorMessages').empty();
-        $('#approvalerrorMessages').append(errorHtml);
-        $("#submitForApproval").attr("disabled", false);
-      //  $("#approvalCommentModal").modal('hide');
-        }
-        else
-        {
-        let errorHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+ msg+
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-          '<span aria-hidden="true">&times;</span>'+
-        '</button>'+
-        '</div>';
-        $('#approvalerrorMessages').empty();
-        $('#approvalerrorMessages').append(errorHtml);
-        $("#submitForApproval").attr("disabled", false);
-     //   $("#approvalCommentModal").modal('hide');
-        }
-
-
-        }).fail(function(){
-              console.log("error");
-              //$("#approvalCommentModal").modal('hide');
+          $("#approvalCommentModal").modal('show');
         });
-         
-        });
-    
+
+
+       
+        $('#submitForApproval').on('click',function(event){
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            let comment  = document.getElementById('commentTextarea').value;
+            let expenseID = document.getElementById('expenseId').value;
+          //  alert('comment' +comment+' expenseID : '+expenseID);
+
+            document.getElementById('edit'+expenseID).disabled=true;
+            let expenseName = document.getElementById('name'+expenseID).text;
+            let totalAmount = document.getElementById('amount'+expenseID).innerHTML;
+            console.log('expenseName  : '+expenseName+' totalAmount : '+totalAmount);
+            $("#submitForApproval").attr("disabled", true);
+  
+            $.post("/expense/sendForApproval", {selectedExpenseId : expenseID, expenseName: expenseName, totalAmount :totalAmount, comment: comment}, 
+          
+            function(data){
+                    console.log(data);
+                   // onLoadTask();
+                  //  $("#approvalCommentModal").modal('hide');
+                  let msg = data;
+       if(data == 'OKOKOK')
+       {
+      //  document.getElementById("formdata").reset();
+        let errorHtml = '<div class="alert alert-success alert-dismissible fade show" role="alert">'+ 'Approval Sent Successfully'+
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+              '<span aria-hidden="true">&times;</span>'+
+            '</button>'+
+          '</div>';
+          $('#apperrorMessages').empty();
+          $('#apperrorMessages').append(errorHtml);
+          $("#submitForApproval").attr("disabled", false);
+          $("#approvalCommentModal").modal('hide');
+       }
+       else
+       {
+        let errorHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+ data+
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+              '<span aria-hidden="true">&times;</span>'+
+            '</button>'+
+          '</div>';
+          $('#apperrorMessages').empty();
+          $('#apperrorMessages').append(errorHtml);
+          $("#submitForApproval").attr("disabled", false);
+       }
+        
+
+            }).fail(function(){
+                  console.log("error");
+                  //$("#approvalCommentModal").modal('hide');
+            });
+
+            
         });
         
         /***********************************  Edit Functionality *********************/
@@ -1296,8 +1264,8 @@
 
             /***** Creating Tour Bill Claim ****/
 
-             /***** Creating Tour Bill Claim ****/
-             $("a.tourBillClaim").click(function(){
+              /***** Creating Tour Bill Claim ****/
+              $("a.tourBillClaim").click(function(){
               $('#createTourBillClaimModal').modal('show');
               $('#tourBillClaimSubmitbutton').on('click',function(event){
                 event.stopImmediatePropagation();
@@ -1354,6 +1322,7 @@
                     })
               })
           })  
+
 
 
 /***********************************************************************************************************************
@@ -1623,7 +1592,8 @@ $('.printexp').on('click', function(event){
               
                   boardingTableRow += '<thead>';
                   boardingTableRow += '<tr>';
-                  boardingTableRow += '<td colspan="15"  style="background-color:#d3d3d3;padding:5px;"><h5 style="padding-left:5px;">Boarding & Lodging Charge Information</h5></td>';    
+                  boardingTableRow += '<td colspan="13"  style="background-color:#d3d3d3;padding:5px;"><h5 style="padding-left:5px;">Boarding & Lodging Charge Information</h5></td>';    
+               //   boardingTableRow += '<td colspan="7"  style="background-color:#d3d3d3;padding:5px;"><h5 style="padding-left:5px;">Boarding & Lodging Charge Information</h5></td>';    
                   boardingTableRow += '</tr>';
                   boardingTableRow += '<tr><th>Boarding Lodging Number</th>';
                   boardingTableRow += '<th>Tour Bill Claim</th>';
@@ -1861,4 +1831,5 @@ $('.printexp').on('click', function(event){
           });
 
 </script>
+
 

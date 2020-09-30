@@ -521,7 +521,10 @@ $('.deleteButton').on('click',function(event){
     // let parentId = document.getElementById('parentId').innerHTML;
       let parentId = this.id;
     console.log('airrailbus Id  '+parentId);
-      alert('Are you sure to Delete this record !');
+    var r = confirm('Are you sure to Delete this record !');
+     // alert('Are you sure to  Delete this record !');
+     if (r == true) 
+            {
   
       $.ajax({
       url : '/expense/tourBillClaim/deleteboardingloadging/'+parentId,
@@ -541,6 +544,7 @@ $('.deleteButton').on('click',function(event){
                 console.log('jqXHR  '+JSON.stringify(jqXHR));
                 window.location.reload()
           }) 
+        }
           })
       }
 
