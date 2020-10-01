@@ -2,26 +2,28 @@
 <% include ../../partials/footer %>
  
 <style>
-  #formdata .form-control {
-    width: auto;
-    }
+  @media (max-width: 768px){
+.mb-mobile{margin-bottom: 10px;}
+}
+
 </style>
 
  <!--  <div class="container"> -->
+   <div style="overflow-y: auto;">
   <div class="row mt-5">
         
         <div class="col-md-10 m-auto">
               <div class="col-md-5">
-                  <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/getAirBusListView?tourBillClaimId=<%= parentTourBillId %>" >Go To Air/Rail/Bus</a>
-                  <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/tourBillViewRelated/<%= parentTourBillId %>"  >Go To TourBill</a>
-                  <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/expenseLanding/<%= parentTourBillId %>"  >Go To Expense</a>
+                  <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/getAirBusListView?tourBillClaimId=<%= parentTourBillId %>" >Go To Air/Rail/Bus</a>
+                  <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/tourBillViewRelated/<%= parentTourBillId %>"  >Go To TourBill</a>
+                  <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/expenseLanding/<%= parentTourBillId %>"  >Go To Expense</a>
                 </div>
             </br>
    <p id="tourbillId"><%= parentTourBillId %></p>
    <h4 align="center">Air/Rail/Bus Fare</h4>
    <br />
 
-   <div class="">
+   <div class="" style="overflow-y: auto;">
     <% include ../../partials/messages %>
     <div id="errorMessages"></div>
    <form method="post" action="/insertprecash" id="formdata"  enctype="multipart/form-data">
@@ -49,7 +51,7 @@
    </div>
   </div>
   </div>
- 
+</div>
 
 
 <script>

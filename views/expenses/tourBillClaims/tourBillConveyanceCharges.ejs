@@ -1,13 +1,19 @@
 <% include ../../partials/navbar %>
 <% include ../../partials/footer %>
+<style>
+      @media (max-width: 768px){
+  .mb-mobile{margin-bottom: 10px;}
+  }
 
-<div class="row mt-5 mb-3 align-items-center">
+</style>
+<div style="overflow-y: auto;">
+  <div class="row mt-5">
         
-  <div class="col-md-10 m-auto">
-    <div class="col-md-7">
-          <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/conveyanceChargesListView?tourBillClaimId=<%= parentTourBillId %>" >Go To Conveyance Charges</a>
-          <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/tourBillViewRelated/<%= parentTourBillId %>"  >Go To TourBill</a>
-          <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/expenseLanding/<%= parentTourBillId %>"  >Go To Expense</a>
+        <div class="col-md-10 m-auto">
+              <div class="col-md-5">
+          <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/conveyanceChargesListView?tourBillClaimId=<%= parentTourBillId %>" >Go To Conveyance Charges</a>
+          <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/tourBillViewRelated/<%= parentTourBillId %>"  >Go To TourBill</a>
+          <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/expenseLanding/<%= parentTourBillId %>"  >Go To Expense</a>
         </div>
       </br>
    <p id="tourbillId"><%= parentTourBillId %></p>
@@ -41,7 +47,7 @@
    </div>
    </div>
   </div>
- 
+</div>
 
 
 <script>

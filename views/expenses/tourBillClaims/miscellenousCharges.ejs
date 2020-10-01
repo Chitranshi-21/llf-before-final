@@ -1,13 +1,20 @@
 <% include ../../partials/navbar %>
 <% include ../../partials/footer %>
 
-<div class="row mt-5">
-        
-  <div class="col-md-10 m-auto">
-        <div class="col-md-7">
-      <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/miscellaneousCharge?tourBillClaimId=<%= parentTourBillId %>" >Go To Miscellenous Charges</a>
-      <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/tourBillViewRelated/<%= parentTourBillId %>"  >Go To TourBill</a>
-      <a class="btn btn-primary btn-md bg-gray" href="/expense/tourBillClaim/expenseLanding/<%= parentTourBillId %>"  >Go To Expense</a>
+<style>
+  @media (max-width: 768px){
+.mb-mobile{margin-bottom: 10px;}
+}
+
+</style>
+<div style="overflow-y: auto;">
+<div class="container-fluid">
+  <br />
+  
+     <div class="col-md-10">
+      <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/miscellaneousCharge?tourBillClaimId=<%= parentTourBillId %>" >Go To Miscellenous Charges</a>
+      <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/tourBillViewRelated/<%= parentTourBillId %>"  >Go To TourBill</a>
+      <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/tourBillClaim/expenseLanding/<%= parentTourBillId %>"  >Go To Expense</a>
 
     </div>
   </br>
@@ -42,7 +49,7 @@
    </div>
   </div>
 </div>
- 
+</div>
 
 
 <script>

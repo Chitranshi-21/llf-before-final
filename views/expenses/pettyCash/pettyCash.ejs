@@ -13,7 +13,7 @@
   }
 </style>
 
-
+<div style="overflow-y: auto;">
     <div id="activityCodes"></div>
     <p id="expenseId"><%= parentExpenseId %></p>
     <div class="row mt-5">
@@ -23,7 +23,8 @@
           <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/pettycashlistview?expenseId=<%= parentExpenseId %>" id="createNewPettyCashButton">Go To Petty Cash</a>
           <a class="btn btn-primary btn-md bg-gray mb-mobile" href="/expense/expenseViewRel/<%= parentExpenseId %>" >Go To Expense </a>
           <a class="btn btn-primary btn-md bg-gray mb-mobile" href="https://res.cloudinary.com/hfmqrflec/image/upload/v1600428034/expense%20document/LLF_-_Travel_Policy_rbojui.pdf" target="_blank" >Petty Cash Policy Document </a>
-
+        </div>
+        </div>
       </div>
             <br/>
           <div class="">
@@ -35,7 +36,7 @@
     
 
           <form method="post" action="/insertprecash" id="formdata"  enctype="multipart/form-data">
-            <div class="table-responsive">
+            <div class="table-responsive" style="overflow-y: auto;">
             <table class="table table-bordered" id="item_table">
               <tr>
               <th>SLIP NO</th>
@@ -61,7 +62,7 @@
     </div>
   </div>
 </div>
-
+</div>
 
 <script>
 $(document).ready(function(){
